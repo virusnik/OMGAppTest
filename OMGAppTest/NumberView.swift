@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct NumberView: View {
-    @State private var scale: CGFloat = 1.0
     @Binding var number: Int
-    
+    @State private var isPressed = false
     var body: some View {
         VStack {
             Text("\(number)")
@@ -24,13 +23,16 @@ struct NumberView: View {
             RoundedRectangle(cornerRadius: 10,
                              style: .continuous).stroke(Color.purple, lineWidth: 2)
         )
-        .scaleEffect(scale)
+        .scaleEffect(isPressed ? 0.8 : 1.0)
         .animation(.easeInOut)
-        .onLongPressGesture(minimumDuration: .infinity) {
-        } onPressingChanged: { starting in
-            withAnimation { scale = starting ? 0.8 : 1
-            }
-        }
+        .simultaneousGesture(
+                        TapGesture()
+                            .onEnded { _ in
+                                withAnimation {
+                                    self.isPressed.toggle()
+                                }
+                            }
+                    )
     }
 }
 
