@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NumberView: View {
     @State private var scale: CGFloat = 1.0
-    let number: Int
+    @Binding var number: Int
     
     var body: some View {
         VStack {
@@ -35,5 +35,5 @@ struct NumberView: View {
 }
 
 #Preview {
-    NumberView(number: 1)
+    NumberView(number: .constant(1))
 }
